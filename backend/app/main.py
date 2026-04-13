@@ -1,15 +1,19 @@
+import os
 from datetime import datetime, timedelta, timezone
 
 from fastapi import FastAPI, HTTPException, status
 from jose import JWTError, jwt
 from pydantic import BaseModel
 
-SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
+SECRET_KEY = os.environ.get(
+    "JWT_SECRET_KEY",
+    "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7",
+)
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_SECONDS = 300
 
-VALID_USERNAME = "admin"
-VALID_PASSWORD = "admin123"
+VALID_USERNAME = os.environ.get("APP_USERNAME", "admin")
+VALID_PASSWORD = os.environ.get("APP_PASSWORD", "admin123")
 
 app = FastAPI(title="JWT Authentication API", version="1.0.0")
 
